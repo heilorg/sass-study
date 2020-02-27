@@ -1,0 +1,80 @@
+// sass 실시간 컴파일 : node-sass --watch sass --output css
+
+// 이 주석도 추가
+
+// 다른 sass 파일을 불러올 수 있다
+@import "./app";
+
+// 변수 설정은 $
+$primary-color: #333;
+$light-text: white;
+
+body {
+    // 선택자 안에서 변수 값을 바꾸면 그 선택자 안에서만 적용
+    $primary-color: #eee;
+    background-color: $primary-color;
+}
+
+p {
+    background-color: $primary-color;
+    color: $light-text;
+}
+
+span {
+    // 선택자 안에서 글로벌로 변수를 변경하면 변수 값이 바뀜
+    $primary-color: #123 !global;
+    background-color: $primary-color;
+    color: $light-text;
+}
+
+a {
+    background-color: $primary-color;
+    color: $light-text;
+}
+
+.container {
+    width: 100%;
+}
+
+article[role="main"] {
+    float: left;
+    // 연산자 +, -, /, *, %, ==, != 사용가능
+    width: 600px / 960px * 100%;
+}
+
+aside[role="complementary"] {
+    float: left;
+    width: 300px / 960px * 100%;
+}
+
+$buttonColor: #2ecc71;
+// 내장합수 darken() 이 외에도 많은 내장함수가 있다
+// darken은 색상을 더 어둡게 만드는 합수
+$buttonDark: darken($buttonColor, 10%);
+$buttonDarker: darken($buttonDark, 10%);
+
+button {
+    background-color: $buttonColor;
+    border-radius: 3px;
+    box-shadow: 0px 5px 0px $buttonDark;
+    border: none;
+    padding: 10px 30px;
+    display: inline-block;
+    outline: 0;
+
+    // 중첩 해당 선택자 내부의 선택자나 해당 선택자의 가상 클래스도 선택 가능하다
+    &:hover {
+        background-color: $buttonDark;
+        box-shadow: 0px 5px 0px $buttonDarker;
+    }
+
+    &:active {
+        box-shadow: none;
+        margin-top: 5px;
+    }
+
+    .button-text {
+        font-size: 17px;
+        color: $light-text;
+    }
+}

@@ -1,0 +1,29 @@
+.box {
+    border: 1px solid gray;
+    padding: 10px;
+    display: inline-block;
+}
+
+.success-box {
+    // extend로 상속받을 수 있다
+    @extend .box;
+    border: 1px solid green;
+}
+
+//mixin 함수처럼 사용하는 것
+@mixin headline($color, $size) {
+    color: $color;
+    font-size: $size;
+}
+
+h3 {
+    @include headline(green, 12px);
+}
+
+@function calc-percent($target, $container) {
+    @return ($target/$container) * 100%;
+}
+
+.box-2 {
+    width: calc-percent(650px, 1000px);
+}
