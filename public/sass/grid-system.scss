@@ -1,0 +1,94 @@
+// grid default
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+$total-grid-columns: 12 !default;
+$gutter: 2% !default;
+$fold: left !default;
+$push: 0 !default;
+
+@mixin grid(
+    $col-span,
+    $fold: $fold,
+    $push: $push,
+    $grid-size: $total-grid-columns,
+    $margin: $gutter
+) {
+    float: #{$fold};
+    width: (100% / ($grid-size / $col-span)) - $margin;
+
+    @if $push < 1 {
+        margin-left: ($margin / 2);
+        margin-right: ($margin / 2);
+    }
+
+    @if $push > 1 {
+        margin-#{$fold}: (((100% / $grid-size) * $push)) +
+            ($margin / ($grid-size / $push));
+    }
+}
+
+$break-wide: 1180px;
+$break-desktop: 990px;
+$break-tablet: 780px;
+$break-mobile: 430px;
+
+@mixin break($media, $col-span, $grid-size: $total-grid-columns) {
+    @if $media == wide {
+        @media only screen and (max-width: $break-wide) {
+            width: (((100% / $grid-size) * $col-span) - $gutter);
+            margin: $gutter / 2;
+        }
+    } @else if $media == desktop {
+        @media only screen and (max-width: $break-desktop) {
+            width: (((100% / $grid-size) * $col-span) - $gutter);
+            margin: $gutter / 2;
+        }
+    } @else if $media == tablet {
+        @media only screen and (max-width: $break-tablet) {
+            width: (((100% / $grid-size) * $col-span) - $gutter);
+            margin: $gutter / 2;
+        }
+    } @else if $media == mobile {
+        @media only screen and (max-width: $break-mobile) {
+            width: (((100% / $grid-size) * $col-span) - $gutter);
+            margin: $gutter / 2;
+        }
+    }
+}
+
+header {
+    @include grid(12);
+    height: 50px;
+    // display: flex;
+    align-items: center;
+}
+h3 {
+    @include grid(3);
+    @include break(tablet, 12);
+    @include break(mobile, 12);
+}
+nav {
+    @include grid(6, $fold, $push: 3);
+    display: flex;
+    justify-content: space-between;
+    @include break(tablet, 12);
+    @include break(mobile, 12);
+}
+#main-content {
+    @include grid(12);
+}
+article {
+    @include grid(9);
+    @include break(mobile, 12);
+}
+aside {
+    @include grid(3);
+    @include break(mobile, 12);
+}
+footer {
+    @include grid(12);
+}
